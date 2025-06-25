@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gearscore - New World Offers</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Dark background inspired by gaming themes */
+            color: #e2e8f0; /* Light text for contrast */
+        }
+        .header-bg {
+            background-color: #1a202c; /* A dark blue-gray color */
+            background-size: cover;
+            background-position: center;
+        }
+        .offer-card {
+            background-color: #1a202c; /* Slightly darker than body for contrast */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .offer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        }
+        .btn-primary {
+            background-color: #6366f1; /* Indigo */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary:hover:not(:disabled) { /* Only hover if not disabled */
+            background-color: #4f46e5; /* Darker indigo */
+        }
+        .btn-primary:disabled {
+            background-color: #4a5568; /* Grayed out when disabled */
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .btn-secondary {
+            background-color: #2d3748; /* Darker gray */
+            color: #cbd5e0;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            border: 1px solid #4a5568;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-secondary:hover {
+            background-color: #4a5568;
+        }
+        .navbar-link {
+            color: #cbd5e0;
+            transition: color 0.2s ease-in-out;
+        }
+        .navbar-link:hover {
+            color: #ffffff;
+        }
+        .price {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            color: #a78bfa; /* Light purple */
+        }
+        /* Custom dual-handle range slider styles */
+        .range-slider-container {
+            position: relative;
+            width: 100%;
+            height: 8px;
+            background: #4a5568; /* Grey background for the track */
+            border-radius: 4px;
+            margin-top: 1.5rem; /* Adjust as needed */
+            margin-bottom: 0.5rem; /* Adjust as needed */
+        }
+
+        .range-slider-fill {
+            position: absolute;
+            height: 100%;
+            background: #6366f1; /* Indigo background for the filled part */
+            border-radius: 4px;
+            left: 0; /* Will be updated by JS */
+            width: 100%; /* Will be updated by JS */
+        }
+
+        .slider-thumb {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: #6366f1;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            border: 2px solid #a78bfa;
+            top: 50%;
+            transform: translate(-50%, -50%); /* Center the thumb vertically */
+            z-index: 2; /* Ensure thumbs are above the fill */
+        }
+
+        /* Styling for radio buttons (still needed for World type) */
+        input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #6366f1;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            margin-right: 8px;
+            flex-shrink: 0; /* Prevent shrinking in flex container */
+        }
+
+        input[type="radio"]:checked {
+            background-color: #6366f1;
+            border-color: #a78bfa;
+        }
+
+        input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        /* Styling for checkboxes */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #6366f1;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            margin-right: 8px;
+            flex-shrink: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #6366f1;
+            border-color: #a78bfa;
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '\2713'; /* Checkmark character */
+            color: #fff;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-900 p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="text-3xl font-bold rounded-lg px-4 py-2 tracking-wider flex items-center justify-center
+                       bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg
+                       transform hover:scale-105 transition duration-300">
+                <i class="fas fa-cog text-white mr-3 text-4xl"></i>
+                <span class="text-white">Gearscore</span>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex space-x-6 text-lg">
+                <a href="index.html" class="navbar-link">Home</a>
+                <a href="games.html" class="navbar-link">Games</a> <!-- Updated link to the new games list page -->
+                <a href="index.html#services" class="navbar-link">Services</a>
+                <a href="index.html#how-it-works" class="navbar-link">How It Works</a>
+                <a href="faq.html" class="navbar-link">FAQ</a>
+                <a href="contact.html" class="navbar-link">Contact Us</a>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <select class="bg-gray-800 text-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="en" selected>English</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-gray-400 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section for New World Offers Page -->
+    <header class="header-bg py-20 text-center text-white rounded-b-xl shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight">
+                New World <span class="text-indigo-400">Boosting Offers</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
+                Conquer Aeternum with our professional power leveling, raid completions, and more!
+            </p>
+        </div>
+    </header>
+
+    <!-- New World Offers Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                <!-- New World Power Leveling -->
+                <div class="offer-card">
+                    <h2 class="text-3xl font-bold text-white mb-4">New World Power Leveling</h2>
+                    <p class="text-gray-300 mb-6">Choose your desired level range for professional power leveling service.</p>
+                    
+                    <div class="space-y-6 mb-6">
+                        <!-- Dual-Handle Level Slider -->
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-300 text-lg font-semibold">Current Level:</span>
+                            <span id="currentLevelDisplay" class="text-indigo-400 text-xl font-bold">1</span>
+                            <span class="text-gray-300 text-lg font-semibold ml-auto mr-2">Desired Level:</span>
+                            <span id="desiredLevelDisplay" class="text-indigo-400 text-xl font-bold">65</span>
+                        </div>
+                        <div class="range-slider-container" id="levelRangeSlider">
+                            <div class="range-slider-fill" id="rangeFill"></div>
+                            <div class="slider-thumb" id="thumbLeft"></div>
+                            <div class="slider-thumb" id="thumbRight"></div>
+                        </div>
+                        
+                        <!-- Level Range and Price Display -->
+                        <p id="selectedLevelRangeDisplay" class="text-indigo-400 text-xl font-bold mt-4 text-center">
+                            Level 1 to 65: Price: $45.00
+                        </p>
+
+                        <!-- Choose World Radio Buttons -->
+                        <div class="text-left mt-6">
+                            <label class="block text-gray-300 text-lg font-semibold mb-3">Choose World:</label>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="radio" name="worldType" value="Seasonal World" class="form-radio text-indigo-500" checked onchange="updateLevels()">
+                                    <span class="ml-2 text-lg">Seasonal World</span>
+                                </label>
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="radio" name="worldType" value="Regular World" class="form-radio text-indigo-500" onchange="updateLevels()">
+                                    <span class="ml-2 text-lg">Regular World</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Choose Your Platform Dropdown -->
+                        <div class="text-left mt-6">
+                            <label for="platformSelect" class="block text-gray-300 text-lg font-semibold mb-3">Choose Your Platform:</label>
+                            <select id="platformSelect" class="bg-gray-700 text-gray-200 rounded-md py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="PC">PC</option>
+                                <!-- Add other platforms if applicable -->
+                            </select>
+                        </div>
+
+                        <!-- Choose Extras for Power Leveling -->
+                        <div class="text-left mt-6">
+                            <label class="block text-gray-300 text-lg font-semibold mb-3">Choose Extras:</label>
+                            <div class="flex flex-col gap-2">
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="checkbox" name="powerLevelingExtra" value="weaponMastery" class="form-checkbox text-indigo-500" onchange="updateLevels()">
+                                    <span class="ml-2 text-lg">Add 1 Weapon Mastery (20 lvl) <span class="text-gray-400 ml-2">+$7.00</span></span> <!-- Updated text and price -->
+                                    <!-- Removed the info icon -->
+                                </label>
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="checkbox" name="powerLevelingExtra" value="specificWeapons" class="form-checkbox text-indigo-500" onchange="updateLevels()">
+                                    <span class="ml-2 text-lg">Use only 2 specific weapons during the boost <span class="text-gray-400 ml-2">Free</span></span>
+                                    <!-- Removed the info icon -->
+                                </label>
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="checkbox" name="powerLevelingExtra" value="specificCovenant" class="form-checkbox text-indigo-500" onchange="updateLevels()">
+                                    <span class="ml-2 text-lg">I need to join a Specific Covenant <span class="text-gray-400 ml-2">Free</span></span>
+                                    <!-- Removed the info icon -->
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Service Type Display for Power Leveling (Piloted Only) -->
+                        <div class="text-left mt-6 mb-6">
+                            <label class="block text-gray-300 text-lg font-semibold mb-3">Service Type:</label>
+                            <span class="text-indigo-400 text-lg">Piloted</span>
+                        </div>
+                    </div>
+
+                    <!-- Button placed below the price/service type -->
+                    <button id="powerLevelingDiscordButton" class="btn-primary w-full text-center inline-block text-xl py-3 px-8" onclick="goToDiscordForSelectedOffer()">
+                        Get This Offer on Discord <i class="fab fa-discord ml-2"></i>
+                    </button>
+                </div>
+
+                <!-- New World Artifacts -->
+                <div class="offer-card">
+                    <h2 class="text-3xl font-bold text-white mb-4">New World Artifacts</h2>
+                    <p class="text-gray-300 mb-6">Select your desired artifact and boosting options.</p>
+
+                    <div class="space-y-6 mb-6">
+                        <!-- Select Artifact Dropdown -->
+                        <div class="text-left">
+                            <label for="artifactSelect" class="block text-gray-300 text-lg font-semibold mb-3">Select Artifact:</label>
+                            <select id="artifactSelect" class="bg-gray-700 text-gray-200 rounded-md py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" onchange="updateArtifactPrice()">
+                                <option value="">Select an Artifact</option>
+                                <option value="Trsna">Trsna</option>
+                                <option value="Power Stone">Power Stone</option>
+                                <option value="Inferno">Inferno</option>
+                                <option value="The Abyss">The Abyss</option>
+                                <option value="Odo">Odo</option>
+                                <option value="The Wall">The Wall</option>
+                                <option value="Spark of Mjolnir">Spark of Mjolnir</option>
+                                <option value="The Butcher">The Butcher</option>
+                                <option value="Scorpion’s Sting">Scorpion’s Sting</option>
+                                <option value="Freya’s Francisca">Freya’s Francisca</option>
+                                <option value="The Mechanic">The Mechanic</option>
+                                <option value="Finisher">Finisher</option>
+                                <option value="Lifetaker">Lifetaker</option>
+                                <option value="Boltcaster">Boltcaster</option>
+                            </select>
+                        </div>
+
+                        <!-- Boost Option Radio Buttons -->
+                        <div class="text-left mt-6">
+                            <label class="block text-gray-300 text-lg font-semibold mb-3">Boost Option:</label>
+                            <div class="flex flex-col gap-2">
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="radio" name="artifactBoostOption" value="questCompletion" class="form-radio text-indigo-500" onchange="updateArtifactPrice()">
+                                    <span class="ml-2 text-lg">Artifact Quests Completion <span class="text-gray-400 ml-2">+$13.00</span></span>
+                                </label>
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="radio" name="artifactBoostOption" value="fullUpgrade" class="form-radio text-indigo-500" onchange="updateArtifactPrice()">
+                                    <span class="ml-2 text-lg">Full Artifact Upgrade <span class="text-gray-400 ml-2">+$119.00</span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Select Completion Speed Radio Buttons -->
+                        <div class="text-left mt-6">
+                            <label class="block text-gray-300 text-lg font-semibold mb-3">Select Completion Speed:</label>
+                            <div class="flex flex-col gap-2">
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="radio" name="completionSpeed" value="express" class="form-radio text-indigo-500" onchange="updateArtifactPrice()">
+                                    <span class="ml-2 text-lg">Express <span class="text-gray-400 ml-2">+$2.80</span></span>
+                                </label>
+                                <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                    <input type="radio" name="completionSpeed" value="superExpress" class="form-radio text-indigo-500" onchange="updateArtifactPrice()">
+                                    <span class="ml-2 text-lg">Super Express <span class="text-gray-400 ml-2">+$5.60</span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Choose Your Platform Dropdown (ONLY PC for Artifacts) -->
+                        <div class="text-left mt-6">
+                            <label for="artifactPlatformSelect" class="block text-gray-300 text-lg font-semibold mb-3">Choose Your Platform:</label>
+                            <select id="artifactPlatformSelect" class="bg-gray-700 text-gray-200 rounded-md py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" onchange="updateArtifactPrice()">
+                                <option value="PC">PC</option>
+                            </select>
+                        </div>
+
+                        <!-- Service Type Display (Piloted Only) -->
+                        <div class="text-left mt-6 mb-6">
+                            <label class="block text-gray-300 text-lg font-semibold mb-3">Service Type:</label>
+                            <span class="text-indigo-400 text-lg">Piloted</span>
+                        </div>
+                    </div>
+
+                    <!-- Total Price and Button -->
+                    <div class="flex flex-col items-center mb-6">
+                        <span class="price mb-4" id="artifactTotalPrice">$0.00</span> <!-- Initial price will be updated by JS -->
+                        <button id="artifactDiscordButton" class="btn-primary w-full text-xl py-3 px-8" onclick="goToDiscordForArtifactOffer()">
+                            Get This Offer on Discord <i class="fab fa-discord ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gorgon Raid Completion -->
+                <div class="offer-card">
+                    <h2 class="text-3xl font-bold text-white mb-4">Gorgon Raid Completion</h2>
+                    <p class="text-gray-300 mb-6">Complete Gorgon raid with full loot and rewards.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300 mb-6">
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Full raid completion</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>All loot included</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Professional team</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Guaranteed completion</p>
+                    </div>
+                    <!-- Removed Estimated Time: <p class="text-gray-400 text-sm mb-6">Estimated: 2-3 hours</p> -->
+
+                    <!-- Choose Number of Bosses for Gorgon Raid -->
+                    <div class="text-left mt-6">
+                        <label class="block text-gray-300 text-lg font-semibold mb-3">Choose Number of Bosses:</label>
+                        <div class="flex flex-col gap-2">
+                            <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                <input type="radio" name="gorgonBosses" value="1" class="form-radio text-indigo-500" checked onchange="updateGorgonPrice()">
+                                <span class="ml-2 text-lg">1/3 <span class="text-gray-400 ml-2">+$15.00</span></span>
+                            </label>
+                            <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                <input type="radio" name="gorgonBosses" value="2" class="form-radio text-indigo-500" onchange="updateGorgonPrice()">
+                                <span class="ml-2 text-lg">2/3 <span class="text-gray-400 ml-2">+$30.00</span></span>
+                            </label>
+                            <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                <input type="radio" name="gorgonBosses" value="3" class="form-radio text-indigo-500" onchange="updateGorgonPrice()">
+                                <span class="ml-2 text-lg">3/3 <span class="text-gray-400 ml-2">+$40.00</span></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Service Type Display for Gorgon Raid (Piloted Only) -->
+                    <div class="text-left mt-6 mb-6"> <!-- Added mb-6 for spacing before the button -->
+                        <label class="block text-gray-300 text-lg font-semibold mb-3">Service Type:</label>
+                        <span class="text-indigo-400 text-lg">Piloted</span>
+                    </div>
+
+                    <!-- Price and button stacked -->
+                    <div class="flex flex-col items-center mb-6">
+                        <span class="price mb-4" id="gorgonPrice">$15.00</span> <!-- Adjusted initial display price -->
+                        <button class="btn-primary w-full text-xl py-3 px-8" onclick="goToDiscordForOffer('Gorgon Raid Completion', GORGON_BASE_PRICE, 'gorgonBosses')">
+                            Get This Offer on Discord <i class="fab fa-discord ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Expedition Runs -->
+                <div class="offer-card">
+                    <h2 class="text-3xl font-bold text-white mb-4">Expedition Runs</h2>
+                    <p class="text-gray-300 mb-6">Professional expedition runs for gear and experience.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300 mb-6">
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Multiple expeditions</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Gear farming</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Experience boost</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Fast completion</p>
+                    </div>
+                    <!-- Removed Estimated Time: <p class="text-gray-400 text-sm mb-6">Estimated: 1-2 hours</p> -->
+
+                    <!-- Number of Runs Slider (Custom) -->
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-gray-300 text-lg font-semibold">Number of Runs:</span>
+                        <span id="numRunsDisplay" class="text-indigo-400 text-xl font-bold">1</span>
+                    </div>
+                    <div class="range-slider-container" id="expeditionRunsContainer">
+                        <div class="range-slider-fill" id="expeditionRunsFill"></div>
+                        <div class="slider-thumb" id="expeditionRunsThumb"></div>
+                    </div>
+                    <p id="expeditionPriceDisplay" class="text-indigo-400 text-xl font-bold mt-4 text-center">
+                        1 Run: Price: $1.50
+                    </p>
+
+                    <!-- Choose Any Dungeon Dropdown -->
+                    <div class="text-left mt-6">
+                        <label for="dungeonSelect" class="block text-gray-300 text-lg font-semibold mb-3">Choose Any Dungeon:</label>
+                        <select id="dungeonSelect" class="bg-gray-700 text-gray-200 rounded-md py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" onchange="updateExpeditionPrice()">
+                            <option value="">Select a Dungeon</option>
+                            <option value="Amrine Excavation">Amrine Excavation</option>
+                            <option value="Starstone Barrows">Starstone Barrows</option>
+                            <option value="The Depths">The Depths</option>
+                            <option value="Dynasty Shipyard">Dynasty Shipyard</option>
+                            <option value="Garden of Genesis">Garden of Genesis</option>
+                            <option value="Lazarus Instrumentality">Lazarus Instrumentality</option>
+                            <option value="Tempest’s Heart">Tempest’s Heart</option>
+                            <option value="Barnacles and Black Powder">Barnacles and Black Powder</option>
+                            <option value="The Ennead">The Ennead</option>
+                            <option value="Empyrean Forge">Empyrean Forge</option>
+                            <option value="Savage Divide">Savage Divide</option>
+                            <option value="The Glacial Tarn">The Glacial Tarn</option>
+                        </select>
+                    </div>
+
+                    <!-- Choose Mutation Level Dropdown -->
+                    <div class="text-left mt-6">
+                        <label for="mutationLevelSelect" class="block text-gray-300 text-lg font-semibold mb-3">Choose Mutation Level:</label>
+                        <select id="mutationLevelSelect" class="bg-gray-700 text-gray-200 rounded-md py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" onchange="updateExpeditionPrice()">
+                            <option value="">Select Mutation Level (Optional)</option>
+                            <option value="Level 1">Level 1</option>
+                            <option value="Level 2">Level 2</option>
+                            <!-- Add more levels as needed -->
+                        </select>
+                    </div>
+
+
+                    <!-- Service Type Display for Expedition Runs (Piloted Only) -->
+                    <div class="text-left mt-6 mb-6"> <!-- Added mb-6 for spacing before the button -->
+                        <label class="block text-gray-300 text-lg font-semibold mb-3">Service Type:</label>
+                        <span class="text-indigo-400 text-lg">Piloted</span>
+                    </div>
+
+                    <!-- Price and button stacked -->
+                    <div class="flex flex-col items-center mb-6">
+                        <button class="btn-primary w-full text-xl py-3 px-8" onclick="goToDiscordForExpeditionOffer()">
+                            Get This Offer on Discord <i class="fab fa-discord ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Elite Chest Runs -->
+                <div class="offer-card">
+                    <h2 class="text-3xl font-bold text-white mb-4">Elite Chest Runs</h2>
+                    <p class="text-gray-300 mb-6">Daily elite chest farming routes.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300 mb-6">
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>All elite areas</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Maximum efficiency</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Valuable loot</p>
+                        <p><i class="fas fa-check-circle text-green-500 mr-2"></i>Daily completion</p>
+                    </div>
+                    <!-- Removed Estimated Time: <p class="text-gray-400 text-sm mb-6">Estimated: 1 hour</p> -->
+
+                    <!-- Choose Number of Days for Elite Chest Runs -->
+                    <div class="text-left mt-6">
+                        <label class="block text-gray-300 text-lg font-semibold mb-3">Choose Number of Days:</label>
+                        <div class="flex flex-col gap-2">
+                            <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                <input type="radio" name="eliteChestDays" value="1" class="form-radio text-indigo-500" checked onchange="updateEliteChestPrice()">
+                                <span class="ml-2 text-lg">1 Day <span class="text-gray-400 ml-2">($10.00)</span></span>
+                            </label>
+                            <label class="inline-flex items-center text-gray-300 cursor-pointer">
+                                <input type="radio" name="eliteChestDays" value="2" class="form-radio text-indigo-500" onchange="updateEliteChestPrice()">
+                                <span class="ml-2 text-lg">2 Days <span class="text-gray-400 ml-2">($15.00)</span></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Service Type Display for Elite Chest Runs (Piloted Only) -->
+                    <div class="text-left mt-6 mb-6"> <!-- Added mb-6 for spacing before the button -->
+                        <label class="block text-gray-300 text-lg font-semibold mb-3">Service Type:</label>
+                        <span class="text-indigo-400 text-lg">Piloted</span>
+                    </div>
+
+                    <!-- Price and button stacked -->
+                    <div class="flex flex-col items-center mb-6">
+                        <span class="price mb-4" id="eliteChestPrice">$10.00</span>
+                        <button class="btn-primary w-full text-xl py-3 px-8" onclick="goToDiscordForOffer('Elite Chest Runs', ELITE_CHEST_BASE_PRICE, 'eliteChestDays')">
+                            Get This Offer on Discord <i class="fab fa-discord ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section (Footer for this page) -->
+    <section class="bg-indigo-700 text-white py-12 text-center mx-auto max-w-7xl mt-12 rounded-xl shadow-xl">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-4">Ready to boost your New World adventure?</h2>
+            <p class="text-xl mb-8">Join our Discord server to purchase any offer or request a custom service!</p>
+            <a href="https://discord.gg/DzvbWwzuV8" target="_blank" class="btn-primary inline-block bg-white text-indigo-700 hover:bg-gray-200 text-xl py-3 px-8">
+                Join Our Discord Server <i class="fab fa-discord ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-10 text-gray-400 text-sm">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Gearscore</h3>
+                <p>Your gateway to professional gaming boosting services. We aim to provide the best experience for gamers.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Quick Links</h3>
+                <ul>
+                    <li class="mb-2"><a href="index.html" class="hover:text-white">Home</a></li>
+                    <li class="mb-2"><a href="games.html" class="hover:text-white">Games</a></li>
+                    <li class="mb-2"><a href="index.html#services" class="hover:text-white">Services</a></li>
+                    <li class="mb-2"><a href="index.html#how-it-works" class="hover:text-white">How It Works</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Support</h3>
+                <ul>
+                    <li class="mb-2"><a href="faq.html" class="hover:text-white">FAQ</a></li>
+                    <li class="mb-2"><a href="contact.html" class="hover:text-white">Contact Us</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="#" class="hover:text-white">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Follow Us</h3>
+                <div class="flex space-x-4 text-2xl">
+                    <a href="#" class="hover:text-white"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-10 border-t border-gray-700 pt-8">
+            <p>&copy; 2024 Gearscore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Define total prices for specific ranges and overall
+        const TOTAL_LEVELS_TO_BOOST = 64; // From level 1 to level 65 is 64 levels
+        const BASE_HOURS_PER_LEVEL = 0.5; // Example: 0.5 hours per level (can be adjusted)
+        const MIN_PRICE_PER_ONE_LEVEL = 2.00; // Minimum price if only one level is selected
+        const PILOTED_MULTIPLIER = 1.0; 
+
+        // Pricing for levels 60-65 (fixed total price)
+        const PRICE_60_65_REGULAR = 10;
+        const PRICE_60_65_SEASONAL = 13;
+        const LEVELS_IN_60_65_RANGE = 5; 
+
+        // Pricing for levels 30-40 (fixed total price)
+        const PRICE_30_40_REGULAR = 5;
+        const PRICE_30_40_SEASONAL = 6.5;
+        const LEVELS_IN_30_40_RANGE = 11; 
+
+        // Full range total prices
+        const REGULAR_WORLD_TOTAL_PRICE_FULL_RANGE = 35; 
+        const SEASONAL_WORLD_TOTAL_PRICE_FULL_RANGE = 45; 
+
+        // Calculate total levels and price in fixed-price segments
+        const TOTAL_LEVELS_IN_FIXED_PRICE_SEGMENTS = LEVELS_IN_30_40_RANGE + LEVELS_IN_60_65_RANGE; 
+
+        // Calculate remaining levels that get variable pricing
+        const LEVELS_FOR_VARIABLE_PRICING = TOTAL_LEVELS_TO_BOOST - TOTAL_LEVELS_IN_FIXED_PRICE_SEGMENTS; 
+
+        // Calculate total price covered by fixed price segments
+        const FIXED_PRICE_TOTAL_REGULAR = PRICE_30_40_REGULAR + PRICE_60_65_REGULAR; 
+        const FIXED_PRICE_TOTAL_SEASONAL = PRICE_30_40_SEASONAL + PRICE_60_65_SEASONAL; 
+
+        // Calculate the remaining price for variable pricing levels
+        const REMAINING_PRICE_REGULAR = REGULAR_WORLD_TOTAL_PRICE_FULL_RANGE - FIXED_PRICE_TOTAL_REGULAR;
+        const REMAINING_PRICE_SEASONAL = SEASONAL_WORLD_TOTAL_PRICE_FULL_RANGE - FIXED_PRICE_TOTAL_SEASONAL;
+
+        // Calculate price per level for the 'variable' segments (1-29 and 41-59 combined)
+        const PRICE_PER_LEVEL_VARIABLE_REGULAR = REMAINING_PRICE_REGULAR / LEVELS_FOR_VARIABLE_PRICING;
+        const PRICE_PER_LEVEL_VARIABLE_SEASONAL = REMAINING_PRICE_SEASONAL / LEVELS_FOR_VARIABLE_PRICING;
+
+        // Base prices for other fixed offers. GORGON_BASE_PRICE is effectively unused for calculation now.
+        const GORGON_BASE_PRICE = 75; 
+        const ELITE_CHEST_BASE_PRICE = 20; 
+
+        // Boss prices for Gorgon Raid
+        const GORGON_BOSS_PRICES = {
+            '1': 15.00,
+            '2': 30.00,
+            '3': 40.00
+        };
+
+        // Elite Chest Run prices based on days
+        const ELITE_CHEST_DAYS_PRICES = {
+            '1': 10.00,
+            '2': 15.00
+        };
+
+        // Prices for Power Leveling Extras
+        const POWER_LEVELING_EXTRAS_PRICES = {
+            'weaponMastery': 7.00, 
+            'specificWeapons': 0, 
+            'specificCovenant': 0 
+        };
+
+        // Prices for each dungeon (can be adjusted later if different prices per dungeon are needed)
+        const DUNGEON_PRICES = {
+            'Amrine Excavation': 0,
+            'Starstone Barrows': 0,
+            'The Depths': 0,
+            'Dynasty Shipyard': 0,
+            'Garden of Genesis': 0,
+            'Lazarus Instrumentality': 0,
+            'Tempest’s Heart': 0,
+            'Barnacles and Black Powder': 0,
+            'The Ennead': 0,
+            'Empyrean Forge': 0,
+            'Savage Divide': 0,
+            'The Glacial Tarn': 0
+        };
+
+        // Prices for Mutation Levels (initially 0, can be updated)
+        const MUTATION_LEVEL_PRICES = {
+            'Level 1': 0,
+            'Level 2': 0
+        };
+
+        // Prices for Artifacts
+        const ARTIFACT_PRICES = {
+            'Trsna': 60.00,
+            'Power Stone': 20.00,
+            'Inferno': 12.00,
+            'The Abyss': 12.00,
+            'Odo': 12.00,
+            'The Wall': 12.00,
+            'Spark of Mjolnir': 12.00,
+            'The Butcher': 12.00,
+            'Scorpion’s Sting': 12.00,
+            'Freya’s Francisca': 12.00,
+            'The Mechanic': 12.00,
+            'Finisher': 12.00,
+            'Lifetaker': 12.00,
+            'Boltcaster': 12.00
+        };
+
+        // Prices for Artifact Boost Options
+        const ARTIFACT_BOOST_OPTIONS_PRICES = {
+            'questCompletion': 13.00,
+            'fullUpgrade': 119.00
+        };
+
+        // Prices for Artifact Completion Speed
+        const ARTIFACT_COMPLETION_SPEED_PRICES = {
+            'express': 2.80,
+            'superExpress': 5.60
+        };
+
+        // Expedition Runs specific pricing
+        const PRICE_PER_RUN = 1.50;
+        const MIN_RUNS = 1;
+        const MAX_RUNS = 35;
+        let selectedRuns = 1;
+
+
+        // Slider variables and elements
+        const minOverallLevel = 1;
+        const maxOverallLevel = 65;
+        let currentLevel = 1;
+        let desiredLevel = 65;
+
+        // Function to convert level to percentage position on slider
+        function levelToPercentage(level, minVal, maxVal) {
+            return ((level - minVal) / (maxVal - minVal)) * 100;
+        }
+
+        // Function to convert percentage position to level/run on slider
+        function percentageToValue(percentage, minVal, maxVal) {
+            return Math.round((percentage / 100) * (maxVal - minVal) + minVal);
+        }
+
+        // Function to update levels, price, and button text for Power Leveling
+        function updateLevels() {
+            const currentLevelDisplay = document.getElementById('currentLevelDisplay');
+            const desiredLevelDisplay = document.getElementById('desiredLevelDisplay');
+            const selectedLevelRangeDisplay = document.getElementById('selectedLevelRangeDisplay');
+            const powerLevelingDiscordButton = document.getElementById('powerLevelingDiscordButton');
+            const rangeFill = document.getElementById('rangeFill');
+            const thumbLeft = document.getElementById('thumbLeft');
+            const thumbRight = document.getElementById('thumbRight');
+            const levelRangeSlider = document.getElementById('levelRangeSlider');
+
+            // Get selected world type (Regular or Seasonal)
+            const selectedWorldType = document.querySelector('input[name="worldType"]:checked').value;
+            
+            // Calculate thumb positions for display
+            const leftThumbPercent = levelToPercentage(currentLevel, minOverallLevel, maxOverallLevel);
+            const rightThumbPercent = levelToPercentage(desiredLevel, minOverallLevel, maxOverallLevel);
+
+            thumbLeft.style.left = `${leftThumbPercent}%`;
+            thumbRight.style.left = `${rightThumbPercent}%`;
+
+            rangeFill.style.left = `${leftThumbPercent}%`;
+            rangeFill.style.width = `${rightThumbPercent - leftThumbPercent}%`;
+
+            // Update level displays
+            currentLevelDisplay.textContent = currentLevel;
+            desiredLevelDisplay.textContent = desiredLevel;
+
+            const levelDifference = desiredLevel - currentLevel;
+            let calculatedPrice = 0;
+
+            if (levelDifference === 0) {
+                calculatedPrice = 0; // No levels to boost
+            } else {
+                // Loop through each level to be boosted from currentLevel up to (but not including) desiredLevel
+                for (let i = currentLevel; i < desiredLevel; i++) {
+                    let levelPrice = 0;
+                    if (i >= 30 && i <= 39) { // Levels 30 to 39 (to reach level 40)
+                        levelPrice = (selectedWorldType === 'Regular World' ? PRICE_30_40_REGULAR : PRICE_30_40_SEASONAL) / LEVELS_IN_30_40_RANGE;
+                    } else if (i >= 60 && i <= 64) { // Levels 60 to 64 (to reach level 65)
+                        levelPrice = (selectedWorldType === 'Regular World' ? PRICE_60_65_REGULAR : PRICE_60_65_SEASONAL) / LEVELS_IN_60_65_RANGE;
+                    } else { // Other levels (1-29 and 41-59)
+                        levelPrice = (selectedWorldType === 'Regular World' ? PRICE_PER_LEVEL_VARIABLE_REGULAR : PRICE_PER_LEVEL_VARIABLE_SEASONAL);
+                    }
+                    calculatedPrice += levelPrice;
+                }
+                
+                // Apply minimum price for one level difference, if applicable
+                if (levelDifference === 1 && calculatedPrice < MIN_PRICE_PER_ONE_LEVEL) {
+                    calculatedPrice = MIN_PRICE_PER_ONE_LEVEL;
+                }
+            }
+
+            // Add extras price
+            document.querySelectorAll('input[name="powerLevelingExtra"]:checked').forEach(checkbox => {
+                calculatedPrice += POWER_LEVELING_EXTRAS_PRICES[checkbox.value];
+            });
+
+
+            // Piloted is always applied for power leveling, but multiplier is 1.0 now
+            calculatedPrice *= PILOTED_MULTIPLIER;
+
+            // Ensure price is formatted to 2 decimal places
+            const formattedPrice = calculatedPrice.toFixed(2);
+
+            // Calculate estimated time (Removed, but keeping the variable 'hours' for potential future use or if needed elsewhere)
+            const hours = (levelDifference * BASE_HOURS_PER_LEVEL).toFixed(1);
+
+            // Update displayed text
+            selectedLevelRangeDisplay.textContent = `Level ${currentLevel} to ${desiredLevel}: Price: $${formattedPrice}`;
+
+            // Update the main button text
+            powerLevelingDiscordButton.textContent = `Go to Discord for Level ${currentLevel} to ${desiredLevel} Boost (Piloted)`;
+
+            // Enable the button (it should always be enabled now that both sliders are present)
+            powerLevelingDiscordButton.removeAttribute('disabled');
+        }
+
+        // Function to update prices for Expedition Runs (now with slider)
+        function updateExpeditionPrice() {
+            const numRunsDisplay = document.getElementById('numRunsDisplay');
+            const expeditionPriceDisplay = document.getElementById('expeditionPriceDisplay');
+            const dungeonSelect = document.getElementById('dungeonSelect');
+            const mutationLevelSelect = document.getElementById('mutationLevelSelect');
+            const expeditionRunsThumb = document.getElementById('expeditionRunsThumb');
+            const expeditionRunsFill = document.getElementById('expeditionRunsFill');
+
+            numRunsDisplay.textContent = selectedRuns;
+
+            // Update thumb position and fill width
+            const thumbPercent = levelToPercentage(selectedRuns, MIN_RUNS, MAX_RUNS);
+            expeditionRunsThumb.style.left = `${thumbPercent}%`;
+            expeditionRunsFill.style.width = `${thumbPercent}%`;
+
+
+            let calculatedPrice = selectedRuns * PRICE_PER_RUN;
+
+            const selectedDungeon = dungeonSelect.value;
+            if (selectedDungeon && DUNGEON_PRICES[selectedDungeon] !== undefined) {
+                calculatedPrice += DUNGEON_PRICES[selectedDungeon]; // Add dungeon specific price
+            }
+
+            const selectedMutationLevel = mutationLevelSelect.value;
+            if (selectedMutationLevel && MUTATION_LEVEL_PRICES[selectedMutationLevel] !== undefined) {
+                calculatedPrice += MUTATION_LEVEL_PRICES[selectedMutationLevel]; // Add mutation level specific price
+            }
+
+            calculatedPrice *= PILOTED_MULTIPLIER; // Always apply piloted multiplier
+
+            expeditionPriceDisplay.textContent = `${selectedRuns} Run${selectedRuns > 1 ? 's' : ''}: Price: $${calculatedPrice.toFixed(2)}`;
+        }
+
+
+        // Specific update functions for other offers
+        function updateGorgonPrice() {
+            const priceDisplayElement = document.getElementById('gorgonPrice');
+            const selectedBosses = document.querySelector('input[name="gorgonBosses"]:checked').value;
+            let finalPrice = GORGON_BOSS_PRICES[selectedBosses]; 
+            
+            finalPrice *= PILOTED_MULTIPLIER; 
+            priceDisplayElement.textContent = `$${finalPrice.toFixed(2)}`;
+        }
+
+        function updateEliteChestPrice() {
+            const priceDisplayElement = document.getElementById('eliteChestPrice');
+            const selectedDays = document.querySelector('input[name="eliteChestDays"]:checked').value;
+            let finalPrice = ELITE_CHEST_DAYS_PRICES[selectedDays]; 
+
+            finalPrice *= PILOTED_MULTIPLIER;
+            priceDisplayElement.textContent = `$${finalPrice.toFixed(2)}`;
+        }
+
+        // Function to update prices for Artifact offer
+        function updateArtifactPrice() {
+            const artifactSelect = document.getElementById('artifactSelect');
+            const artifactBoostOptionRadios = document.querySelectorAll('input[name="artifactBoostOption"]');
+            const completionSpeedRadios = document.querySelectorAll('input[name="completionSpeed"]');
+            const artifactTotalPriceDisplay = document.getElementById('artifactTotalPrice');
+            const artifactDiscordButton = document.getElementById('artifactDiscordButton');
+
+            let currentArtifactPrice = 0;
+            let selectedArtifact = artifactSelect.value;
+            let selectedBoostOption = null;
+            let selectedCompletionSpeed = null;
+
+            // Get Artifact Price
+            if (selectedArtifact && ARTIFACT_PRICES[selectedArtifact] !== undefined) {
+                currentArtifactPrice += ARTIFACT_PRICES[selectedArtifact];
+            }
+
+            // Get Boost Option Price
+            artifactBoostOptionRadios.forEach(radio => {
+                if (radio.checked) {
+                    selectedBoostOption = radio.value;
+                    currentArtifactPrice += ARTIFACT_BOOST_OPTIONS_PRICES[radio.value];
+                }
+            });
+
+            // Get Completion Speed Price
+            completionSpeedRadios.forEach(radio => {
+                if (radio.checked) {
+                    selectedCompletionSpeed = radio.value;
+                    currentArtifactPrice += ARTIFACT_COMPLETION_SPEED_PRICES[radio.value];
+                }
+            });
+            
+            const formattedPrice = currentArtifactPrice.toFixed(2);
+            artifactTotalPriceDisplay.textContent = `$${formattedPrice}`;
+
+            // Update button text
+            let buttonText = `Get This Offer on Discord`;
+            if (selectedArtifact && selectedBoostOption) {
+                let boostOptionText = '';
+                if (selectedBoostOption === 'questCompletion') boostOptionText = 'Quest Completion';
+                if (selectedBoostOption === 'fullUpgrade') boostOptionText = 'Full Upgrade';
+
+                let speedText = '';
+                if (selectedCompletionSpeed === 'express') speedText = ' (Express)';
+                if (selectedCompletionSpeed === 'superExpress') speedText = ' (Super Express)';
+
+                buttonText = `Go to Discord for ${selectedArtifact} ${boostOptionText} ${speedText} (Piloted)`;
+            } else if (selectedArtifact) {
+                buttonText = `Go to Discord for ${selectedArtifact} (Piloted)`;
+            } else {
+                buttonText = `Get This Offer on Discord`; // Default text if no artifact selected
+            }
+            artifactDiscordButton.textContent = buttonText;
+        }
+
+
+        // Function to go to Discord for the selected offer (Power Leveling)
+        function goToDiscordForSelectedOffer() {
+            const selectedWorldType = document.querySelector('input[name="worldType"]:checked').value;
+            const selectedPlatform = document.getElementById('platformSelect').value;
+            
+            const levelDifference = desiredLevel - currentLevel;
+            let price = 0;
+
+            if (levelDifference === 0) {
+                price = 0;
+            } else {
+                for (let i = currentLevel; i < desiredLevel; i++) {
+                    let levelPrice = 0;
+                    if (i >= 30 && i <= 39) {
+                        levelPrice = (selectedWorldType === 'Regular World' ? PRICE_30_40_REGULAR : PRICE_30_40_SEASONAL) / LEVELS_IN_30_40_RANGE;
+                    } else if (i >= 60 && i <= 64) {
+                        levelPrice = (selectedWorldType === 'Regular World' ? PRICE_60_65_REGULAR : PRICE_60_65_SEASONAL) / LEVELS_IN_60_65_RANGE;
+                    } else {
+                        levelPrice = (selectedWorldType === 'Regular World' ? PRICE_PER_LEVEL_VARIABLE_REGULAR : PRICE_PER_LEVEL_VARIABLE_SEASONAL);
+                    }
+                    price += levelPrice;
+                }
+
+                if (levelDifference === 1 && price < MIN_PRICE_PER_ONE_LEVEL) {
+                    price = MIN_PRICE_PER_ONE_LEVEL;
+                }
+            }
+
+            // Add extras price to the final price for the Discord message
+            let selectedExtras = [];
+            document.querySelectorAll('input[name="powerLevelingExtra"]:checked').forEach(checkbox => {
+                price += POWER_LEVELING_EXTRAS_PRICES[checkbox.value];
+                // Add friendly name for the alert
+                if (checkbox.value === 'weaponMastery') selectedExtras.push('1 Weapon Mastery (20 lvl)'); 
+                if (checkbox.value === 'specificWeapons') selectedExtras.push('Use specific weapons');
+                if (checkbox.value === 'specificCovenant') selectedExtras.push('Join Specific Covenant');
+            });
+
+            price *= PILOTED_MULTIPLIER; 
+
+            const formattedPrice = price.toFixed(2);
+            const extrasInfo = selectedExtras.length > 0 ? `, Extras: ${selectedExtras.join(', ')}` : '';
+
+            window.open('https://discord.gg/DzvbWwzuV8', '_blank'); 
+            alert(`Redirecting you to Discord for a Level ${currentLevel} to ${desiredLevel} boost on ${selectedWorldType} for ${selectedPlatform} (Service: Piloted, Price: $${formattedPrice}${extrasInfo}).`);
+        }
+
+        // Function for other offers to go to Discord (General purpose, for Gorgon and Elite Chest)
+        function goToDiscordForOffer(offerName, offerBasePrice, selectionName = null) {
+            let finalPrice;
+            let info = "";
+
+            if (selectionName === 'gorgonBosses') {
+                const selectedBosses = document.querySelector(`input[name="${selectionName}"]:checked`).value;
+                finalPrice = GORGON_BOSS_PRICES[selectedBosses];
+                info = ` (${selectedBosses}/3 Bosses)`;
+            } else if (selectionName === 'eliteChestDays') {
+                const selectedDays = document.querySelector(`input[name="${selectionName}"]:checked`).value;
+                finalPrice = ELITE_CHEST_DAYS_PRICES[selectedDays];
+                info = ` (${selectedDays} Day${selectedDays > 1 ? 's' : ''})`;
+            } else {
+                finalPrice = offerBasePrice; 
+            }
+            
+            finalPrice *= PILOTED_MULTIPLIER; 
+            const formattedPrice = finalPrice.toFixed(2);
+
+            window.open('https://discord.gg/DzvbWwzuV8', '_blank');
+            alert(`Redirecting you to Discord for ${offerName}${info} (Service: Piloted, Price: $${formattedPrice}).`);
+        }
+
+        // Function to go to Discord for Artifact offer
+        function goToDiscordForArtifactOffer() {
+            const artifactSelect = document.getElementById('artifactSelect');
+            const artifactBoostOptionRadios = document.querySelectorAll('input[name="artifactBoostOption"]');
+            const completionSpeedRadios = document.querySelectorAll('input[name="completionSpeed"]');
+            const artifactPlatformSelect = document.getElementById('artifactPlatformSelect');
+
+            let selectedArtifact = artifactSelect.value;
+            let selectedBoostOption = null;
+            let selectedCompletionSpeed = null;
+            let selectedPlatform = artifactPlatformSelect.value;
+            let price = 0;
+            let info = '';
+
+            // Get Artifact Price
+            if (selectedArtifact && ARTIFACT_PRICES[selectedArtifact] !== undefined) {
+                price += ARTIFACT_PRICES[selectedArtifact];
+                info += `Artifact: ${selectedArtifact}`;
+            }
+
+            // Get Boost Option Price
+            artifactBoostOptionRadios.forEach(radio => {
+                if (radio.checked) {
+                    selectedBoostOption = radio.value;
+                    price += ARTIFACT_BOOST_OPTIONS_PRICES[radio.value];
+                    if (selectedBoostOption === 'questCompletion') info += `, Boost: Quest Completion`;
+                    if (selectedBoostOption === 'fullUpgrade') info += `, Boost: Full Upgrade`;
+                }
+            });
+
+            // Get Completion Speed Price
+            completionSpeedRadios.forEach(radio => {
+                if (radio.checked) {
+                    selectedCompletionSpeed = radio.value;
+                    price += ARTIFACT_COMPLETION_SPEED_PRICES[radio.value];
+                    if (selectedCompletionSpeed === 'express') info += ` (Express)`;
+                    if (selectedCompletionSpeed === 'superExpress') info += ` (Super Express)`;
+                }
+            });
+            
+            // Add platform info
+            info += `, Platform: ${selectedPlatform}`;
+
+            const formattedPrice = price.toFixed(2);
+
+            window.open('https://discord.gg/DzvbWwzuV8', '_blank');
+            alert(`Redirecting you to Discord for New World Artifacts - ${info} (Service: Piloted, Price: $${formattedPrice}).`);
+        }
+
+        // New function for Expedition Runs Discord redirection
+        function goToDiscordForExpeditionOffer() {
+            const numRunsDisplay = document.getElementById('numRunsDisplay');
+            const dungeonSelect = document.getElementById('dungeonSelect');
+            const mutationLevelSelect = document.getElementById('mutationLevelSelect');
+
+            let price = selectedRuns * PRICE_PER_RUN;
+            let info = `Runs: ${selectedRuns}`;
+
+            const selectedDungeon = dungeonSelect.value;
+            if (selectedDungeon) {
+                price += DUNGEON_PRICES[selectedDungeon];
+                info += `, Dungeon: ${selectedDungeon}`;
+            }
+
+            const selectedMutationLevel = mutationLevelSelect.value;
+            if (selectedMutationLevel) {
+                price += MUTATION_LEVEL_PRICES[selectedMutationLevel];
+                info += `, Mutation Level: ${selectedMutationLevel}`;
+            }
+
+            price *= PILOTED_MULTIPLIER; 
+            const formattedPrice = price.toFixed(2);
+
+            window.open('https://discord.gg/DzvbWwzuV8', '_blank');
+            alert(`Redirecting you to Discord for Expedition Runs - ${info} (Service: Piloted, Price: $${formattedPrice}).`);
+        }
+
+
+        // Dual-handle slider logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const levelRangeSlider = document.getElementById('levelRangeSlider');
+            const thumbLeft = document.getElementById('thumbLeft');
+            const thumbRight = document.getElementById('thumbRight');
+            const worldTypeRadios = document.querySelectorAll('input[name="worldType"]');
+            const gorgonBossesRadios = document.querySelectorAll('input[name="gorgonBosses"]');
+            const eliteChestDaysRadios = document.querySelectorAll('input[name="eliteChestDays"]');
+            const powerLevelingExtraCheckboxes = document.querySelectorAll('input[name="powerLevelingExtra"]');
+            const dungeonSelect = document.getElementById('dungeonSelect');
+            const mutationLevelSelect = document.getElementById('mutationLevelSelect');
+            
+            // Expedition Runs Slider elements
+            const expeditionRunsContainer = document.getElementById('expeditionRunsContainer');
+            const expeditionRunsThumb = document.getElementById('expeditionRunsThumb');
+            const expeditionRunsFill = document.getElementById('expeditionRunsFill');
+
+
+            // Artifacts related elements
+            const artifactSelect = document.getElementById('artifactSelect');
+            const artifactBoostOptionRadios = document.querySelectorAll('input[name="artifactBoostOption"]');
+            const completionSpeedRadios = document.querySelectorAll('input[name="completionSpeed"]');
+            const artifactPlatformSelect = document.getElementById('artifactPlatformSelect');
+
+
+            let activeThumb = null; // To track which thumb is being dragged (can be 'left', 'right', or 'expeditionRuns')
+
+            // Set initial positions and values
+            currentLevel = 1;
+            desiredLevel = 65;
+            selectedRuns = 1; // Initialize selectedRuns for the new slider
+            updateLevels();
+            updateGorgonPrice(); 
+            updateExpeditionPrice(); 
+            updateEliteChestPrice(); 
+            updateArtifactPrice(); // Initialize Artifact price
+
+
+            // Event listeners for world type changes
+            worldTypeRadios.forEach(radio => {
+                radio.addEventListener('change', updateLevels);
+            });
+
+            // Event listeners for Gorgon Bosses changes
+            gorgonBossesRadios.forEach(radio => {
+                radio.addEventListener('change', updateGorgonPrice);
+            });
+
+            // Event listeners for Elite Chest Days changes
+            eliteChestDaysRadios.forEach(radio => {
+                radio.addEventListener('change', updateEliteChestPrice);
+            });
+
+            // Event listeners for Power Leveling Extras changes
+            powerLevelingExtraCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateLevels);
+            });
+
+            // Event listener for Dungeon selection change
+            if (dungeonSelect) {
+                dungeonSelect.addEventListener('change', updateExpeditionPrice);
+            }
+            // Event listener for Mutation Level selection change
+            if (mutationLevelSelect) {
+                mutationLevelSelect.addEventListener('change', updateExpeditionPrice);
+            }
+            
+            // Event listeners for Expedition Runs slider (custom implementation)
+            if (expeditionRunsThumb) {
+                expeditionRunsThumb.addEventListener('mousedown', (e) => {
+                    activeThumb = 'expeditionRuns';
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+                expeditionRunsThumb.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); 
+                    activeThumb = 'expeditionRuns';
+                    document.addEventListener('touchmove', onTouchMove);
+                    document.addEventListener('touchend', onTouchEnd);
+                }, { passive: false });
+            }
+
+
+            // Event listeners for Artifacts section
+            if (artifactSelect) {
+                artifactSelect.addEventListener('change', updateArtifactPrice);
+            }
+            artifactBoostOptionRadios.forEach(radio => {
+                radio.addEventListener('change', updateArtifactPrice);
+            });
+            completionSpeedRadios.forEach(radio => {
+                radio.addEventListener('change', updateArtifactPrice);
+            });
+            if (artifactPlatformSelect) {
+                artifactPlatformSelect.addEventListener('change', updateArtifactPrice);
+            }
+
+
+            // Handle mouse down on Power Leveling thumbs
+            thumbLeft.addEventListener('mousedown', (e) => {
+                activeThumb = 'left';
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+
+            thumbRight.addEventListener('mousedown', (e) => {
+                activeThumb = 'right';
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+
+            // Handle touch events for Power Leveling dragging (for mobile responsiveness)
+            thumbLeft.addEventListener('touchstart', (e) => {
+                e.preventDefault(); 
+                activeThumb = 'left';
+                document.addEventListener('touchmove', onTouchMove);
+                document.addEventListener('touchend', onTouchEnd);
+            }, { passive: false }); 
+
+            thumbRight.addEventListener('touchstart', (e) => {
+                e.preventDefault(); 
+                activeThumb = 'right';
+                document.addEventListener('touchmove', onTouchMove);
+                document.addEventListener('touchend', onTouchEnd);
+            }, { passive: false }); 
+
+            // Handle mouse move for dragging
+            function onMouseMove(e) {
+                if (!activeThumb) return;
+
+                let sliderRect;
+                let newX;
+                let newValue;
+
+                if (activeThumb === 'left' || activeThumb === 'right') {
+                    // Power Leveling Slider
+                    sliderRect = levelRangeSlider.getBoundingClientRect();
+                    newX = e.clientX - sliderRect.left;
+                    newX = Math.max(0, Math.min(newX, sliderRect.width));
+                    let newPercentage = (newX / sliderRect.width) * 100;
+                    newValue = percentageToValue(newPercentage, minOverallLevel, maxOverallLevel);
+
+                    if (activeThumb === 'left') {
+                        newValue = Math.min(newValue, desiredLevel - 1);
+                        if (newValue < minOverallLevel) newValue = minOverallLevel;
+                        currentLevel = newValue;
+                    } else { 
+                        newValue = Math.max(newValue, currentLevel + 1);
+                        if (newValue > maxOverallLevel) newValue = maxOverallLevel;
+                        desiredLevel = newValue;
+                    }
+                    updateLevels();
+                } else if (activeThumb === 'expeditionRuns') {
+                    // Expedition Runs Slider
+                    sliderRect = expeditionRunsContainer.getBoundingClientRect();
+                    newX = e.clientX - sliderRect.left;
+                    newX = Math.max(0, Math.min(newX, sliderRect.width));
+                    let newPercentage = (newX / sliderRect.width) * 100;
+                    newValue = percentageToValue(newPercentage, MIN_RUNS, MAX_RUNS);
+
+                    newValue = Math.max(MIN_RUNS, Math.min(newValue, MAX_RUNS));
+                    selectedRuns = newValue;
+                    updateExpeditionPrice();
+                }
+            }
+
+            // Handle touch move for dragging
+            function onTouchMove(e) {
+                if (!activeThumb || !e.touches[0]) return;
+
+                let sliderRect;
+                let newX;
+                let newValue;
+
+                if (activeThumb === 'left' || activeThumb === 'right') {
+                    // Power Leveling Slider
+                    sliderRect = levelRangeSlider.getBoundingClientRect();
+                    newX = e.touches[0].clientX - sliderRect.left;
+                    newX = Math.max(0, Math.min(newX, sliderRect.width));
+                    let newPercentage = (newX / sliderRect.width) * 100;
+                    newValue = percentageToValue(newPercentage, minOverallLevel, maxOverallLevel);
+
+                    if (activeThumb === 'left') {
+                        newValue = Math.min(newValue, desiredLevel - 1);
+                        if (newValue < minOverallLevel) newValue = minOverallLevel;
+                        currentLevel = newValue;
+                    } else {
+                        newValue = Math.max(newValue, currentLevel + 1);
+                        if (newValue > maxOverallLevel) newValue = maxOverallLevel;
+                        desiredLevel = newValue;
+                    }
+                    updateLevels();
+                } else if (activeThumb === 'expeditionRuns') {
+                    // Expedition Runs Slider
+                    sliderRect = expeditionRunsContainer.getBoundingClientRect();
+                    newX = e.touches[0].clientX - sliderRect.left;
+                    newX = Math.max(0, Math.min(newX, sliderRect.width));
+                    let newPercentage = (newX / sliderRect.width) * 100;
+                    newValue = percentageToValue(newPercentage, MIN_RUNS, MAX_RUNS);
+
+                    newValue = Math.max(MIN_RUNS, Math.min(newValue, MAX_RUNS));
+                    selectedRuns = newValue;
+                    updateExpeditionPrice();
+                }
+            }
+
+            // Handle mouse up to stop dragging
+            function onMouseUp() {
+                activeThumb = null;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+
+            // Handle touch end to stop dragging
+            function onTouchEnd() {
+                activeThumb = null;
+                document.removeEventListener('touchmove', onTouchMove);
+                document.removeEventListener('touchend', onTouchEnd);
+            }
+        });
+    </script>
+</body>
+</html>

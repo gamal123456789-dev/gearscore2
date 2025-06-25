@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+<<<<<<< HEAD
+
+/* Migrated styles from inline <style> in newworldoffers.jsx */
+body {
+                    font-family: 'Inter', sans-serif;
+                    background-color: #0d1117; /* Dark background inspired by gaming themes */
+                    color: #e2e8f0; /* Light text for contrast */
+                }
+                .header-bg {
+                    background-color: #1a202c; /* A dark blue-gray color */
+                    background-size: cover;
+                    background-position: center;
+                }
+                .offer-card {
+                    background-color: #1a202c; /* Slightly darker than body for contrast */
+                    border-radius: 0.75rem; /* rounded-xl */
+                    padding: 1.5rem; /* p-6 */
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+                    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+                }
+                .offer-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+                }
+                .btn-primary {
+                    background-color: #6366f1; /* Indigo */
+                    color: white;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 9999px;
+                    font-weight: 600;
+                    transition: background-color 0.2s ease-in-out;
+                }
+                .btn-primary:hover:not(:disabled) { /* Only hover if not disabled */
+                    background-color: #4f46e5; /* Darker indigo */
+                }
+                .btn-primary:disabled {
+                    background-color: #4a5568; /* Grayed out when disabled */
+                    cursor: not-allowed;
+                    opacity: 0.7;
+                }
+                .btn-secondary {
+                    background-color: #2d3748; /* Darker gray */
+                    color: #cbd5e0;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 9999px;
+                    font-weight: 600;
+                    border: 1px solid #4a5568;
+                    transition: background-color 0.2s ease-in-out;
+                }
+                .btn-secondary:hover {
+                    background-color: #4a5568;
+                }
+                .navbar-link {
+                    color: #cbd5e0;
+                    transition: color 0.2s ease-in-out;
+                }
+                .navbar-link:hover {
+                    color: #ffffff;
+                }
+                .price {
+                    font-size: 2.25rem; /* text-4xl */
+                    font-weight: 700; /* font-bold */
+                    color: #a78bfa; /* Light purple */
+                }
+                /* Custom dual-handle range slider styles */
+                .range-slider-container {
+                    position: relative;
+                    width: 100%;
+                    height: 8px;
+                    background: #4a5568; /* Grey background for the track */
+                    border-radius: 4px;
+                    margin-top: 1.5rem; /* Adjust as needed */
+                    margin-bottom: 0.5rem; /* Adjust as needed */
+                }
+
+                .range-slider-fill {
+                    position: absolute;
+                    height: 100%;
+                    background: #6366f1; /* Indigo background for the filled part */
+                    border-radius: 4px;
+                    left: 0; /* Will be updated by JS */
+                    width: 100%; /* Will be updated by JS */
+                }
+
+                .slider-thumb {
+                    position: absolute;
+                    width: 24px;
+                    height: 24px;
+                    background: #6366f1;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                    border: 2px solid #a78bfa;
+                    top: 50%;
+                    transform: translate(-50%, -50%); /* Center the thumb vertically */
+                    z-index: 2; /* Ensure thumbs are above the fill */
+                }
+
+                /* Styling for radio buttons (still needed for World type) */
+                input[type="radio"] {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    border: 2px solid #6366f1;
+                    outline: none;
+                    cursor: pointer;
+                    position: relative;
+                    margin-right: 8px;
+                    flex-shrink: 0; /* Prevent shrinking in flex container */
+                }
+
+                input[type="radio"]:checked {
+                    background-color: #6366f1;
+                    border-color: #a78bfa;
+                }
+
+                input[type="radio"]:checked::before {
+                    content: '';
+                    display: block;
+                    width: 10px;
+                    height: 10px;
+                    background-color: #fff;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+                /* Styling for checkboxes */
+                input[type="checkbox"] {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid #6366f1;
+                    border-radius: 4px;
+                    outline: none;
+                    cursor: pointer;
+                    position: relative;
+                    margin-right: 8px;
+                    flex-shrink: 0;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
+                input[type="checkbox"]:checked {
+                    background-color: #6366f1;
+                    border-color: #a78bfa;
+                }
+
+                input[type="checkbox"]:checked::after {
+                    content: '\\2713'; /* Checkmark character */
+                    color: #fff;
+                    font-size: 14px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+=======
+>>>>>>> 11c9ccf41cd8c56956f4218ba23161a8486c9d95
